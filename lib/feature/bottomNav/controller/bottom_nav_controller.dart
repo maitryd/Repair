@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-enum BnbItem {home, bookings, cart, offers, more}
+enum BnbItem {repair, shop, cart, booking, more}
 class BottomNavController extends GetxController {
   static BottomNavController get to => Get.find();
 
@@ -9,7 +9,7 @@ class BottomNavController extends GetxController {
     super.onInit();
   }
 
-  var currentPage = BnbItem.home.obs;
+  var currentPage = BnbItem.repair.obs;
   void changePage(BnbItem bnbItem) {
     print("name:${bnbItem.name}");
     currentPage.value = bnbItem;

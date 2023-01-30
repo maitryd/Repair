@@ -115,6 +115,48 @@ class SocialLoginWidget extends StatelessWidget {
             ),
           ),
         ),
+
+          SizedBox(width: Dimensions.PADDING_SIZE_DEFAULT,),
+
+        if(Get.find<SplashController>().configModel.content!.appleSocialLogin.toString() == '1')
+          InkWell(
+            onTap: () async{
+              LoginResult _result = await FacebookAuth.instance.login();
+              if (_result.status == LoginStatus.success) {
+                Map _userData = await FacebookAuth.instance.getUserData();
+                Get.find<AuthController>().loginWithSocialMedia(SocialLogInBody(
+                  email: _userData['email'], token: _result.accessToken!.token, uniqueId: _result.accessToken!.userId, medium: 'facebook',
+                ));
+              }
+            },
+            child: Container(
+              height: ResponsiveHelper.isDesktop(context)?50 :ResponsiveHelper.isTab(context)? 40:40,
+              width: ResponsiveHelper.isDesktop(context)? 130 :ResponsiveHelper.isTab(context)? 110: 40,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: Theme.of(context).shadowColor,
+                borderRadius: BorderRadius.all(Radius.circular(Dimensions.RADIUS_LARGE)),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    Images.apple,
+                    height: ResponsiveHelper.isDesktop(context)?30 :ResponsiveHelper.isTab(context)? 25:20,
+                    width: ResponsiveHelper.isDesktop(context)? 30 :ResponsiveHelper.isTab(context)? 25: 20,
+                  ),
+
+                  !ResponsiveHelper.isMobile(context)?
+                  Row(
+                    children: [
+                      SizedBox(width: Dimensions.PADDING_SIZE_SMALL,),
+                      Text('apple'.tr,style: ubuntuRegular.copyWith(),)
+                    ],
+                  ):SizedBox.shrink()
+                ],
+              ),
+            ),
+          ),
       ]),
     ]);
   }

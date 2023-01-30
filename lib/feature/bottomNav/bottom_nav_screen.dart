@@ -35,7 +35,7 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
     return WillPopScope(
       onWillPop: () async {
         if (_pageIndex != 0) {
-          Get.find<BottomNavController>().changePage(BnbItem.home);
+          Get.find<BottomNavController>().changePage(BnbItem.repair);
           return false;
         } else {
           if (_canExit) {
@@ -99,21 +99,21 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
             color:Get.isDarkMode ? Theme.of(context).cardColor.withOpacity(.5) : Theme.of(context).primaryColor,
             child: Row(children: [
               _bnbItem(
-                  icon: Images.home,
-                  bnbItem: BnbItem.home,
+                  icon: Images.repair,
+                  bnbItem: BnbItem.repair,
                   onTap: () {
-                    Get.find<BottomNavController>().changePage(BnbItem.home);
+                    Get.find<BottomNavController>().changePage(BnbItem.repair);
                   },
                   context: context),
               _bnbItem(
-                  icon: Images.bookings,
-                  bnbItem: BnbItem.bookings,
+                  icon: Images.shop,
+                  bnbItem: BnbItem.shop,
                   onTap: () {
                     if (!_isUserLoggedIn) {
                       Get.toNamed(
                           RouteHelper.getNotLoggedScreen('my_bookings'.tr));
                     } else {
-                      Get.find<BottomNavController>().changePage(BnbItem.bookings);
+                      Get.find<BottomNavController>().changePage(BnbItem.shop);
                     }
                   },
                   context: context),
@@ -130,10 +130,10 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
                   },
                   context: context),
               _bnbItem(
-                  icon: Images.offerMenu,
-                  bnbItem: BnbItem.offers,
+                  icon: Images.bookings,
+                  bnbItem: BnbItem.booking,
                   onTap: () {
-                    Get.find<BottomNavController>().changePage(BnbItem.offers);
+                    Get.find<BottomNavController>().changePage(BnbItem.booking);
                   },
                   context: context),
               _bnbItem(
@@ -187,9 +187,9 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
   _bottomNavigationView() {
     PriceConverter.getCurrency();
     switch (Get.find<BottomNavController>().currentPage.value) {
-      case BnbItem.home:
+      case BnbItem.repair:
         return HomeScreen();
-      case BnbItem.bookings:
+      case BnbItem.shop:
         if (!Get.find<AuthController>().isLoggedIn()) {
           break;
         } else {
@@ -201,7 +201,7 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
         } else {
           return Get.toNamed(RouteHelper.getCartRoute());
         }
-      case BnbItem.offers:
+      case BnbItem.booking:
         return OfferScreen();
     //no page will will be return shows only menu dialog from _bnbItem tap
       case BnbItem.more:

@@ -23,6 +23,10 @@ class _ForgetPassScreenState extends State<ForgetPassScreen> {
     super.initState();
   }
 
+  static const passResetOption = <String>["Mobile Number", "Email ID"];
+
+  String selectedOptionValue = "";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,66 +46,87 @@ class _ForgetPassScreenState extends State<ForgetPassScreen> {
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_LARGE),
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                      Image.asset(
-                        Images.forgotPass,
-                        width: 100,
-                        height: 100,),
-                      SizedBox(height: Dimensions.PADDING_SIZE_LARGE,),
-                      Row(
-                        children: [
-                          CodePickerWidget(
-                            onChanged: (CountryCode countryCode) =>
-                            authController.countryDialCode = countryCode.dialCode!,
-                            initialSelection: authController.countryDialCode,
-                            favorite: [authController.countryDialCode],
-                            showDropDownButton: true,
-                            padding: EdgeInsets.zero,
-                            showFlagMain: true,
-                            dialogBackgroundColor: Theme.of(context).cardColor,
-                            barrierColor: Get.isDarkMode?Colors.black.withOpacity(0.4):null,
-                            textStyle: ubuntuRegular.copyWith(
-                              fontSize: Dimensions.fontSizeLarge, color: Theme.of(context).textTheme.bodyText1!.color,
+                          Image.asset(
+                            Images.forgotPass,
+                            width: 100,
+                            height: 100,),
+                          SizedBox(height: Dimensions.PADDING_SIZE_LARGE,),
+                          Column(
+                            children: passResetOption.map(
+                                  (value) {
+                                return RadioListTile(
+                                    value: value,
+                                    groupValue: selectedOptionValue,
+                                    title: Text(value),
+                                    onChanged: (val) {
+                                      setState(() {
+                                        this.selectedOptionValue = value!;
+                                        print(selectedOptionValue);
+                                      });
+                                    });
+                              },
+                            ).toList(),
+                          ),
+                          if(selectedOptionValue == 'Mobile Number')...[
+                            Row(
+                              children: [
+                                CodePickerWidget(
+                                  onChanged: (CountryCode countryCode) =>
+                                  authController.countryDialCode = countryCode.dialCode!,
+                                  initialSelection: authController.countryDialCode,
+                                  favorite: [authController.countryDialCode],
+                                  showDropDownButton: true,
+                                  padding: EdgeInsets.zero,
+                                  showFlagMain: true,
+                                  dialogBackgroundColor: Theme.of(context).cardColor,
+                                  barrierColor: Get.isDarkMode?Colors.black.withOpacity(0.4):null,
+                                  textStyle: ubuntuRegular.copyWith(
+                                    fontSize: Dimensions.fontSizeLarge, color: Theme.of(context).textTheme.bodyText1!.color,
+                                  ),
+                                ),
+                                Expanded(
+                                  child: CustomTextField(
+                                      hintText: 'enter_phone_number'.tr,
+                                      controller: authController.contactNumberController,
+                                      inputType: TextInputType.phone,
+                                      countryDialCode: authController.countryDialCode,
+                                      onCountryChanged: (CountryCode countryCode) => authController.countryDialCode = countryCode.dialCode!,
+                                      onValidate: (String? value){
+                                        return FormValidation().isValidLength(value!);
+                                      }
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
-                          Expanded(
-                            child: CustomTextField(
-                                hintText: 'enter_phone_number'.tr,
-                                controller: authController.contactNumberController,
-                                inputType: TextInputType.phone,
-                                countryDialCode: authController.countryDialCode,
-                                onCountryChanged: (CountryCode countryCode) => authController.countryDialCode = countryCode.dialCode!,
-                                onValidate: (String? value){
-                                  return FormValidation().isValidLength(value!);
-                                }
+                          ]
+                          else if(selectedOptionValue == 'Email ID')...[
+                            CustomTextField(
+                              title: 'Email ID'.tr,
+                              controller: authController.emailIdController,
+                              focusNode: _emailFocus,
+                              inputType: TextInputType.emailAddress,
+                              onValidate: (String? value){
+                                return (GetUtils.isEmail(value!)) ? null : 'enter_valid_email_id'.tr;
+                              },
                             ),
-                          ),
-                        ],
-                      ),
-                          SizedBox(height: Dimensions.PADDING_SIZE_DEFAULT),
-                          Center(child: Text('OR'.tr, style: ubuntuRegular.copyWith(
-                              color:  Theme.of(context).textTheme.bodyText1!.color!.withOpacity(0.6),
-                              fontSize: Dimensions.fontSizeSmall))),
-                          SizedBox(height: Dimensions.PADDING_SIZE_DEFAULT),
-                          CustomTextField(
-                            title: 'Email ID'.tr,
-                            controller: authController.emailIdController,
-                            focusNode: _emailFocus,
-                            inputType: TextInputType.emailAddress,
-                            onValidate: (String? value){
-                              return (GetUtils.isEmail(value!)) ? null : 'enter_valid_email_id'.tr;
-                            },
-                          ),
-                      SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
-                      GetBuilder<AuthController>(builder: (authController) {
-                          return !authController.isLoading! ? CustomButton(
-                            buttonText: 'send_otp'.tr,
-                            onPressed: () => _forgetPass(),
-                          ) : Center(child: CircularProgressIndicator());
-                        }),
-                     SizedBox(height: Dimensions.PADDING_SIZE_LARGE*4),
-                      ]),
+                          ],
+                          // SizedBox(height: Dimensions.PADDING_SIZE_DEFAULT),
+                          // Center(child: Text('OR'.tr, style: ubuntuRegular.copyWith(
+                          //     color:  Theme.of(context).textTheme.bodyText1!.color!.withOpacity(0.6),
+                          //     fontSize: Dimensions.fontSizeSmall))),
+                          // SizedBox(height: Dimensions.PADDING_SIZE_DEFAULT),
+
+                          SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
+                          GetBuilder<AuthController>(builder: (authController) {
+                            return !authController.isLoading! ? CustomButton(
+                              buttonText: 'send_otp'.tr,
+                              onPressed: () => _forgetPass(),
+                            ) : Center(child: CircularProgressIndicator());
+                          }),
+                          SizedBox(height: Dimensions.PADDING_SIZE_LARGE*4),
+                        ]),
                   ),
                 ),
               ),

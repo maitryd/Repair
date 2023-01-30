@@ -15,6 +15,7 @@ class Images {
   static String get cart => 'cart'.png;
   static String get credit => 'credit'.png;
   static String get home => 'home'.png;
+  static String get shop => 'shop'.png;
   static String get menu => 'menu'.png;
   static String get bookings => 'bookings'.png;
   static String get guest => 'guest'.png;

@@ -49,9 +49,9 @@ class AuthController extends GetxController implements GetxService {
     contactNumberController.text = '';
     signInPhoneController.text =  getUserNumber();
     signInPasswordController.text = getUserPassword();
-    countryDialCode = CountryCode.fromCountryCode(Get.find<SplashController>().configModel.content != null ? Get.find<SplashController>().configModel.content!.countryCode!:"BD").dialCode;
-    countryDialCodeForSignup = CountryCode.fromCountryCode(Get.find<SplashController>().configModel.content != null ? Get.find<SplashController>().configModel.content!.countryCode!:"BD").dialCode;
-    countryDialCodeForSignIn = CountryCode.fromCountryCode(Get.find<SplashController>().configModel.content != null ? Get.find<SplashController>().configModel.content!.countryCode!:"BD").dialCode;
+    countryDialCode = CountryCode.fromCountryCode(Get.find<SplashController>().configModel.content != null ? Get.find<SplashController>().configModel.content!.countryCode!:"KW").dialCode;
+    countryDialCodeForSignup = CountryCode.fromCountryCode(Get.find<SplashController>().configModel.content != null ? Get.find<SplashController>().configModel.content!.countryCode!:"KW").dialCode;
+    countryDialCodeForSignIn = CountryCode.fromCountryCode(Get.find<SplashController>().configModel.content != null ? Get.find<SplashController>().configModel.content!.countryCode!:"KW").dialCode;
   }
 
   onClose() {
