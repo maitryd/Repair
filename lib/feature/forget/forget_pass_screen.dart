@@ -49,7 +49,6 @@ class _ForgetPassScreenState extends State<ForgetPassScreen> {
                         width: 100,
                         height: 100,),
                       SizedBox(height: Dimensions.PADDING_SIZE_LARGE,),
-                      SizedBox(height: Dimensions.PADDING_SIZE_LARGE,),
                       Row(
                         children: [
                           CodePickerWidget(
