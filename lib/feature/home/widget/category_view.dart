@@ -24,7 +24,7 @@ class CategoryView extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text('all_categories'.tr, style: ubuntuMedium.copyWith(fontSize: Dimensions.fontSizeExtraLarge)),
+                          Text('Service Categories'.tr, style: ubuntuMedium.copyWith(fontSize: Dimensions.fontSizeExtraLarge)),
                           InkWell(
                             onTap: () {
                               Get.toNamed(RouteHelper.getCategoryProductRoute(

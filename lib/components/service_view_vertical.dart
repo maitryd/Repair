@@ -35,7 +35,7 @@ class ServiceViewVertical extends GetView<ServiceController> {
               crossAxisSpacing: Dimensions.PADDING_SIZE_DEFAULT,
               mainAxisSpacing:  Dimensions.PADDING_SIZE_DEFAULT,
               childAspectRatio: ResponsiveHelper.isDesktop(context) || ResponsiveHelper.isTab(context)  ? .9 :  .70,
-              mainAxisExtent:ResponsiveHelper.isMobile(context) ?  235 : 260 ,
+              mainAxisExtent:ResponsiveHelper.isMobile(context) ?  225 : 260 ,
               crossAxisCount: ResponsiveHelper.isMobile(context) ? 2 : ResponsiveHelper.isTab(context) ? 3 : 5,),
             physics: isScrollable! ? BouncingScrollPhysics() : NeverScrollableScrollPhysics(),
             shrinkWrap: isScrollable! ? false : true,

@@ -30,7 +30,7 @@ class PopularServiceView extends GetView<ServiceController> {
                     ),
                   ),
                   SizedBox(
-                    height: Get.find<LocalizationController>().isLtr ?ResponsiveHelper.isMobile(context) ? 260 :270 :  270,
+                    height: Get.find<LocalizationController>().isLtr ?ResponsiveHelper.isMobile(context) ? 250 :260 :  260,
                     child:ListView.builder(
                       controller: _scrollController,
                       physics: BouncingScrollPhysics(),
@@ -114,52 +114,9 @@ class PopularServiceView extends GetView<ServiceController> {
                                                   child: Text(
                                                       service.name!,
                                                       style: ubuntuMedium.copyWith(fontSize: Dimensions.fontSizeDefault),
-                                                      maxLines: 1, overflow: TextOverflow.ellipsis, textAlign: TextAlign.center),
+                                                      maxLines: 2, overflow: TextOverflow.ellipsis, textAlign: TextAlign.center),
                                                 ),
                                               ],
-                                            ),
-                                            Expanded(
-                                              child: Column(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                mainAxisSize: MainAxisSize.min,
-                                                mainAxisAlignment: MainAxisAlignment.center,
-
-                                                children: [
-                                                  SizedBox(height:ResponsiveHelper.isMobile(context) ? Dimensions.PADDING_SIZE_MINI: Dimensions.PADDING_SIZE_RADIUS,),
-                                                  Text(
-                                                    'starts_from'.tr,
-                                                    style:  ubuntuRegular.copyWith(fontSize: Dimensions.fontSizeExtraSmall, color: Theme.of(context).disabledColor),),
-                                                  Column(
-                                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                                    children: [
-                                                      SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                                                      if(_discountModel.discountAmount! > 0)
-                                                        Text(
-                                                          PriceConverter.convertPrice(_lowestPrice),
-                                                          style: ubuntuRegular.copyWith(
-                                                              fontSize: Dimensions.fontSizeSmall,
-                                                              decoration: TextDecoration.lineThrough,
-                                                              color: Theme.of(context).errorColor.withOpacity(.8)),
-                                                        ),
-                                                      SizedBox(height: Dimensions.PADDING_SIZE_MINI,),
-                                                      _discountModel.discountAmount! > 0?
-                                                      Text(PriceConverter.convertPrice(
-                                                          _lowestPrice,
-                                                          discount: _discountModel.discountAmount!.toDouble(),
-                                                          discountType: _discountModel.discountAmountType
-                                                      ),
-                                                        style: ubuntuRegular.copyWith(
-                                                            fontSize: Dimensions.PADDING_SIZE_DEFAULT,
-                                                            color: Get.isDarkMode? Theme.of(context).primaryColorLight: Theme.of(context).primaryColor),
-                                                      ):
-                                                      Text(
-                                                        PriceConverter.convertPrice(_lowestPrice),
-                                                        style: ubuntuRegular.copyWith(fontSize: Dimensions.fontSizeLarge, color: Get.isDarkMode? Theme.of(context).primaryColorLight: Theme.of(context).primaryColor),
-                                                      ),
-                                                    ],
-                                                  )
-                                                ],
-                                              ),
                                             ),
                                           ]),
                                     ),),
@@ -167,29 +124,37 @@ class PopularServiceView extends GetView<ServiceController> {
                                     child: RippleButton(
                                       onTap:() => Get.toNamed(RouteHelper.getServiceRoute(service.id!),
                                       ),
-                                    ),)
+                                    ),),
                                 ],),
-                              Stack(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
-                                    child: Icon(
-                                        Icons.add,
-                                        color: Get.isDarkMode? Theme.of(context).primaryColorLight: Theme.of(context).primaryColor,
-                                        size: Dimensions.PADDING_SIZE_LARGE),
-                                  ),
-                                  Positioned.fill(
-                                    child: RippleButton(
-                                      onTap: () => showModalBottomSheet(
-                                          context: context,
-                                          useRootNavigator: true,
-                                          isScrollControlled: true,
-                                          builder: (context) => ServiceCenterDialog(service: service,),
-                                        backgroundColor: Colors.transparent
+                              Positioned(
+                                bottom: 10.0,
+                                right: 10.0,
+                                child: Stack(
+                                  children: [
+                                    Align(
+                                        alignment: AlignmentDirectional.bottomEnd,
+                                        child: SizedBox(
+                                          height: 30.0,
+                                          width: 100.0,
+                                          child: CustomButton(
+                                            buttonText: 'Book Now'.tr,
+                                          ),
+                                        )
+                                    ),
+                                    Positioned.fill(
+                                      child: CustomButton(
+                                        buttonText: 'Book Now'.tr,
+                                        onPressed: () => showModalBottomSheet(
+                                            context: context,
+                                            useRootNavigator: true,
+                                            isScrollControlled: true,
+                                            builder: (context) => ServiceCenterDialog(service: service,),
+                                            backgroundColor: Colors.transparent
 
-                                      ),),)
-                                ],
-                              ),
+                                        ),),)
+                                  ],
+                                ),
+                              )
                             ],
                           ),
                         );

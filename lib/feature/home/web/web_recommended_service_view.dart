@@ -162,25 +162,19 @@ class ServiceModelView extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  if(discountAmount! > 0)
-                    Text(PriceConverter.convertPrice(_lowestPrice),
-                      style: ubuntuRegular.copyWith(fontSize: Dimensions.fontSizeSmall,
-                          decoration: TextDecoration.lineThrough,
-                          color: Theme.of(context).errorColor.withOpacity(.8)),
+                    Text(""),
+                  SizedBox(
+                    height: 30.0,
+                    width: 100.0,
+                    child: CustomButton(
+                      buttonText: 'Book Now'.tr,
+                      onPressed: () {
+                        Get.toNamed(
+                          RouteHelper.getServiceRoute(serviceList![index].id!),
+                          arguments: ServiceDetailsScreen(serviceID: serviceList![index].id!),
+                        );},
                     ),
-
-                  discountAmount! > 0?
-                  Text(PriceConverter.convertPrice(_lowestPrice,
-                      discount: discountAmount!.toDouble(),
-                      discountType: discountAmountType
-                  ),
-                    style: ubuntuRegular.copyWith(fontSize: Dimensions.PADDING_SIZE_DEFAULT,
-                        color: Get.isDarkMode? Theme.of(context).primaryColorLight: Theme.of(context).primaryColor),
-                  ): Text(PriceConverter.convertPrice(_lowestPrice),
-                    style: ubuntuRegular.copyWith(
-                        fontSize: Dimensions.PADDING_SIZE_DEFAULT,
-                        color: Get.isDarkMode? Theme.of(context).primaryColorLight: Theme.of(context).primaryColor),
-                  ),
+                  )
 
                 ],
               ),

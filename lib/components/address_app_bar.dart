@@ -50,13 +50,18 @@ class AddressAppBar extends StatelessWidget implements PreferredSizeWidget {
                                     ),
                                   ),
                                 Icon(Icons.arrow_forward_ios_rounded, color: Colors.white, size: 12),
-                  ],
-                );
-              }),
-            ),
+                              ],
+                            );
+                          }),
+                        ),
                       ],),
                 ),
             ),
+            InkWell(
+                hoverColor: Colors.transparent,
+                onTap: () => Get.toNamed(RouteHelper.getLanguageScreen('fromSettingsPage')),
+                child: Image.asset(Images.translate,width: Dimensions.PADDING_SIZE_LARGE,)),
+            SizedBox(width: Dimensions.PADDING_SIZE_DEFAULT),
             InkWell(
                 hoverColor: Colors.transparent,
                 onTap: () => Get.toNamed(RouteHelper.getNotificationRoute()),

@@ -100,50 +100,10 @@ class ServiceWidgetVertical extends StatelessWidget {
                           child: Text(
                             service.name!,
                             style: ubuntuMedium.copyWith(fontSize: Dimensions.fontSizeSmall),
-                            maxLines: 1, overflow: TextOverflow.ellipsis, textAlign: TextAlign.center,
+                            maxLines: 2, overflow: TextOverflow.ellipsis, textAlign: TextAlign.center,
                           ),
                         ),
                       ],
-                    ),
-                    Expanded(
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'starts_from'.tr,
-                              style: ubuntuRegular.copyWith(fontSize: Dimensions.fontSizeExtraSmall, color: Theme.of(context).textTheme.bodyText1!.color!.withOpacity(.6)),
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                if(_discountModel.discountAmount! > 0)
-                                  Text(
-                                    PriceConverter.convertPrice(_lowestPrice.toDouble()),
-                                    maxLines: 2,
-                                    style: ubuntuRegular.copyWith(
-                                        fontSize: Dimensions.fontSizeSmall,
-                                        decoration: TextDecoration.lineThrough,
-                                        color: Theme.of(context).errorColor.withOpacity(.8)),),
-                                _discountModel.discountAmount! > 0?
-                                Text(
-                                  PriceConverter.convertPrice(
-                                      _lowestPrice.toDouble(),
-                                      discount: _discountModel.discountAmount!.toDouble(),
-                                      discountType: _discountModel.discountAmountType),
-                                  style: ubuntuMedium.copyWith(
-                                      fontSize: Dimensions.PADDING_SIZE_DEFAULT,
-                                      color:  Get.isDarkMode? Theme.of(context).primaryColorLight: Theme.of(context).primaryColor),
-                                ):
-                                Text(
-                                  PriceConverter.convertPrice(_lowestPrice.toDouble()),
-                                  style: ubuntuMedium.copyWith(
-                                      fontSize:Dimensions.fontSizeLarge,
-                                      color: Get.isDarkMode? Theme.of(context).primaryColorLight: Theme.of(context).primaryColor),
-                                ),
-                              ],
-                            ),
-                          ]),
                     ),
                   ],),
               ),
@@ -155,21 +115,32 @@ class ServiceWidgetVertical extends StatelessWidget {
         ),
         //add to cart button
         if(fromType != 'fromCampaign')
-          Align(
-            alignment:Get.find<LocalizationController>().isLtr ? Alignment.bottomRight : Alignment.bottomLeft,
+          Positioned(
+            bottom: 10.0,
+            right: 10.0,
             child: Stack(
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
-                  child: Icon(Icons.add, color: Get.isDarkMode? Theme.of(context).primaryColorLight: Theme.of(context).primaryColor, size: Dimensions.PADDING_SIZE_LARGE),
+                Align(
+                    alignment: AlignmentDirectional.bottomEnd,
+                    child: SizedBox(
+                      height: 30.0,
+                      width: 100.0,
+                      child: CustomButton(
+                        buttonText: 'Book Now'.tr,
+                      ),
+                    )
                 ),
-                Positioned.fill(child: RippleButton(onTap: () {
-                  showModalBottomSheet(
-                      useRootNavigator: true,
-                      isScrollControlled: true,
-                      backgroundColor: Colors.transparent,
-                      context: context, builder: (context) => ServiceCenterDialog(service: service));
-                }))
+                Positioned.fill(
+                  child: CustomButton(
+                    buttonText: 'Book Now'.tr,
+                    onPressed: () {
+                        showModalBottomSheet(
+                            useRootNavigator: true,
+                            isScrollControlled: true,
+                            backgroundColor: Colors.transparent,
+                            context: context, builder: (context) => ServiceCenterDialog(service: service));
+                    }
+                    ),)
               ],
             ),
           ),

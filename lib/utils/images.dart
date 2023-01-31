@@ -15,9 +15,11 @@ class Images {
   static String get cart => 'cart'.png;
   static String get credit => 'credit'.png;
   static String get home => 'home'.png;
-  static String get shop => 'shop'.png;
+  static String get shopBlack => 'shop_icon_black'.png;
+  static String get shopWhite => 'shop_icon_white'.png;
   static String get menu => 'menu'.png;
-  static String get bookings => 'bookings'.png;
+  static String get bookingsBlack => 'booking_icon_black'.png;
+  static String get bookingsWhite => 'booking_icon_white'.png;
   static String get guest => 'guest'.png;
   static String get maintenance => 'maintenance'.png;
   static String get ar => 'ar'.png;
@@ -48,7 +50,8 @@ class Images {
   static String get privacy => 'privacy'.png;
   static String get profile => 'profile'.png;
   static String get recommended => 'recommended'.png;
-  static String get repair => 'repair'.png;
+  static String get repairBlack => 'repair_icon_black'.png;
+  static String get repairWhite => 'repair_icon_white'.png;
   static String get review => 'review'.png;
   static String get shifting => 'shifting'.png;
   static String get successIcon => 'success_icon'.png;

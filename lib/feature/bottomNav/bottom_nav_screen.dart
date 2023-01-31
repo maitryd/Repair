@@ -35,7 +35,7 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
     return WillPopScope(
       onWillPop: () async {
         if (_pageIndex != 0) {
-          Get.find<BottomNavController>().changePage(BnbItem.repair);
+          Get.find<BottomNavController>().changePage(BnbItem.Repair);
           return false;
         } else {
           if (_canExit) {
@@ -99,46 +99,46 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
             color:Get.isDarkMode ? Theme.of(context).cardColor.withOpacity(.5) : Theme.of(context).primaryColor,
             child: Row(children: [
               _bnbItem(
-                  icon: Images.repair,
-                  bnbItem: BnbItem.repair,
+                  icon: Images.repairBlack,
+                  bnbItem: BnbItem.Repair,
                   onTap: () {
-                    Get.find<BottomNavController>().changePage(BnbItem.repair);
+                    Get.find<BottomNavController>().changePage(BnbItem.Repair);
                   },
                   context: context),
               _bnbItem(
-                  icon: Images.shop,
-                  bnbItem: BnbItem.shop,
+                  icon: Images.shopBlack,
+                  bnbItem: BnbItem.Shop,
                   onTap: () {
                     if (!_isUserLoggedIn) {
                       Get.toNamed(
                           RouteHelper.getNotLoggedScreen('my_bookings'.tr));
                     } else {
-                      Get.find<BottomNavController>().changePage(BnbItem.shop);
+                      Get.find<BottomNavController>().changePage(BnbItem.Shop);
                     }
                   },
                   context: context),
               _bnbItem(
                   icon: '',
-                  bnbItem: BnbItem.cart,
+                  bnbItem: BnbItem.Cart,
                   onTap: () {
                     if (!_isUserLoggedIn) {
                       Get.toNamed(
                           RouteHelper.getSignInRoute(RouteHelper.main));
                     } else {
-                      Get.find<BottomNavController>().changePage(BnbItem.cart);
+                      Get.find<BottomNavController>().changePage(BnbItem.Cart);
                     }
                   },
                   context: context),
               _bnbItem(
-                  icon: Images.bookings,
-                  bnbItem: BnbItem.booking,
+                  icon: Images.bookingsBlack,
+                  bnbItem: BnbItem.Booking,
                   onTap: () {
-                    Get.find<BottomNavController>().changePage(BnbItem.booking);
+                    Get.find<BottomNavController>().changePage(BnbItem.Booking);
                   },
                   context: context),
               _bnbItem(
                   icon: Images.menu,
-                  bnbItem: BnbItem.more,
+                  bnbItem: BnbItem.More,
                   onTap: () {
                     Get.bottomSheet(MenuScreen(),
                         backgroundColor: Colors.transparent,
@@ -160,7 +160,7 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
     context}) {
     return Obx(() => Expanded(
         child: InkWell(
-          onTap: bnbItem != BnbItem.cart ? onTap : null,
+          onTap: bnbItem != BnbItem.Cart ? onTap : null,
           child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -173,7 +173,7 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
                   : Theme.of(context).secondaryHeaderColor,
             ),
             SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_SMALL),
-            Text(bnbItem != BnbItem.cart ? bnbItem.name.tr : '',
+            Text(bnbItem != BnbItem.Cart ? bnbItem.name.tr : '',
                 style: ubuntuRegular.copyWith(
                   fontSize: Dimensions.fontSizeSmall,
                   color: Get.find<BottomNavController>().currentPage.value == bnbItem
@@ -187,24 +187,24 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
   _bottomNavigationView() {
     PriceConverter.getCurrency();
     switch (Get.find<BottomNavController>().currentPage.value) {
-      case BnbItem.repair:
+      case BnbItem.Repair:
         return HomeScreen();
-      case BnbItem.shop:
+      case BnbItem.Shop:
         if (!Get.find<AuthController>().isLoggedIn()) {
           break;
         } else {
-          return BookingScreen();
+          return OfferScreen();
         }
-      case BnbItem.cart:
+      case BnbItem.Cart:
         if (!Get.find<AuthController>().isLoggedIn()) {
           break;
         } else {
           return Get.toNamed(RouteHelper.getCartRoute());
         }
-      case BnbItem.booking:
-        return OfferScreen();
+      case BnbItem.Booking:
+        return BookingScreen();
     //no page will will be return shows only menu dialog from _bnbItem tap
-      case BnbItem.more:
+      case BnbItem.More:
         break;
     }
   }
