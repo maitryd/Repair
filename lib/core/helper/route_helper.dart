@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:demandium/feature/service/view/company_screen.dart';
 import 'package:get/get.dart';
 import 'package:demandium/core/initial_binding/initial_binding.dart';
 import 'package:demandium/feature/category/bindings/category_bindings.dart';
@@ -35,6 +36,7 @@ class RouteHelper {
   static const String orderTracking = '/track-order';
   static const String html = '/html';
   static const String categories = '/categories';
+  static const String companies = '/companies';
   static const String categoryProduct = '/category-product';
   static const String popularFoods = '/popular-foods';
   static const String itemCampaign = '/item-campaign';
@@ -121,6 +123,8 @@ class RouteHelper {
   static String getReviewRoute() => '$rateReview';
   static String getUpdateRoute(bool isUpdate) => '$update?update=${isUpdate.toString()}';
   static String getCartRoute() => '$cart';
+  static String getCompanyRoute() => '$companies';
+  //static String getCompanyRoute(String id) => '$companies?id=$id';
   static String getAddAddressRoute(bool fromCheckout) => '$addAddress?page=${fromCheckout ? 'checkout' : 'address'}';
   static String getEditAddressRoute(AddressModel address) {
     String _data = base64Url.encode(utf8.encode(jsonEncode(address.toJson())));
@@ -307,6 +311,8 @@ class RouteHelper {
             ));
       }),
       GetPage(name: support, page: () => ContactUsPage()),
+      GetPage(name: companies, page: () => CompanyScreen()),
+      //GetPage(name: companies, page: () => CompanyScreen(serviceID: Get.parameters['id']!,)),
       GetPage(name: update, page: () => UpdateScreen(isUpdate: Get.parameters['update'] == 'true')),
       GetPage(name: cart, page: () => getRoute(CartScreen(fromNav: false))),
       GetPage(name: addAddress, page: () => getRoute(AddAddressScreen(fromCheckout: Get.parameters['page'] == 'checkout'))),

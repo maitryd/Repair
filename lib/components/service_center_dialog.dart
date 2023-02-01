@@ -245,7 +245,7 @@ class _ProductBottomSheetState extends State<ServiceCenterDialog> {
                                   // Get.back();
 
                                 }else{
-                                  cartController.addDataToCart();
+                                  cartController.addDataToCart(widget.service?.id);
                                 }
                               }
                             }: null,

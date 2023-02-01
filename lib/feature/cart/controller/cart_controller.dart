@@ -177,7 +177,7 @@ class CartController extends GetxController implements GetxService {
     update();
   }
 
-  void addDataToCart(){
+  void addDataToCart(String? id){
     if(_cartList.length > 0 && _initialCartList.first.subCategoryId != _cartList.first.subCategoryId) {
       Get.back();
       Get.dialog(ConfirmationDialog(
@@ -194,7 +194,7 @@ class CartController extends GetxController implements GetxService {
           _cartTotalCost();
           update();
           onDemandToast("successfully_added_to_cart".tr,Colors.green);
-          Get.back();
+          Get.toNamed(RouteHelper.getCompanyRoute());
         },
       ));
     }else{
@@ -202,7 +202,7 @@ class CartController extends GetxController implements GetxService {
       _cartTotalCost();
       update();
       onDemandToast("successfully_added_to_cart".tr,Colors.green);
-      Get.back();
+      Get.toNamed(RouteHelper.getCompanyRoute());
     }
 
   }
