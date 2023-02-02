@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:demandium/feature/service/bindings/company_details_binding.dart';
 import 'package:demandium/feature/service/view/company_screen.dart';
 import 'package:get/get.dart';
 import 'package:demandium/core/initial_binding/initial_binding.dart';
@@ -94,6 +95,7 @@ class RouteHelper {
   }
   static String getSearchResultRoute({String? queryText}) => '$searchScreen?query=${queryText ?? ''}';
   static String getServiceRoute(String id) => '$service?id=$id';
+  static String getCompanyRoute(String id) => '$companies?id=$id';
   static String getProfileRoute() => '$profile';
   static String getEditProfileRoute() => '$profileEdit';
   static String getNotificationRoute() => '$notification';
@@ -123,8 +125,6 @@ class RouteHelper {
   static String getReviewRoute() => '$rateReview';
   static String getUpdateRoute(bool isUpdate) => '$update?update=${isUpdate.toString()}';
   static String getCartRoute() => '$cart';
-  static String getCompanyRoute() => '$companies';
-  //static String getCompanyRoute(String id) => '$companies?id=$id';
   static String getAddAddressRoute(bool fromCheckout) => '$addAddress?page=${fromCheckout ? 'checkout' : 'address'}';
   static String getEditAddressRoute(AddressModel address) {
     String _data = base64Url.encode(utf8.encode(jsonEncode(address.toJson())));
@@ -251,6 +251,11 @@ class RouteHelper {
         binding: ServiceDetailsBinding(),
         page: () {
           return getRoute(Get.arguments != null ? Get.arguments : ServiceDetailsScreen(serviceID: Get.parameters['id']!));}),
+    GetPage(
+        name: companies,
+        binding: CompanyDetailsBinding(),
+        page: () {
+          return getRoute(Get.arguments != null ? Get.arguments : CompanyScreen(serviceID: Get.parameters['id']!));}),
 
     GetPage(name: profile, page: () => getRoute(ProfileScreen())),
     GetPage(
@@ -311,8 +316,6 @@ class RouteHelper {
             ));
       }),
       GetPage(name: support, page: () => ContactUsPage()),
-      GetPage(name: companies, page: () => CompanyScreen()),
-      //GetPage(name: companies, page: () => CompanyScreen(serviceID: Get.parameters['id']!,)),
       GetPage(name: update, page: () => UpdateScreen(isUpdate: Get.parameters['update'] == 'true')),
       GetPage(name: cart, page: () => getRoute(CartScreen(fromNav: false))),
       GetPage(name: addAddress, page: () => getRoute(AddAddressScreen(fromCheckout: Get.parameters['page'] == 'checkout'))),

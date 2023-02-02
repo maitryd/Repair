@@ -1,3 +1,4 @@
+import 'package:demandium/feature/service/view/company_screen.dart';
 import 'package:get/get.dart';
 import 'package:demandium/core/core_export.dart';
 import 'package:demandium/feature/voucher/controller/coupon_controller.dart';
@@ -194,7 +195,7 @@ class CartController extends GetxController implements GetxService {
           _cartTotalCost();
           update();
           onDemandToast("successfully_added_to_cart".tr,Colors.green);
-          Get.toNamed(RouteHelper.getCompanyRoute());
+          Get.toNamed(RouteHelper.getCompanyRoute(id!), arguments: CompanyScreen(serviceID : id!));
         },
       ));
     }else{
@@ -202,7 +203,7 @@ class CartController extends GetxController implements GetxService {
       _cartTotalCost();
       update();
       onDemandToast("successfully_added_to_cart".tr,Colors.green);
-      Get.toNamed(RouteHelper.getCompanyRoute());
+      Get.toNamed(RouteHelper.getCompanyRoute(id!), arguments: CompanyScreen(serviceID : id!));
     }
 
   }
