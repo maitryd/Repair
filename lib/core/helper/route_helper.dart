@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:demandium/feature/service/bindings/company_details_binding.dart';
+import 'package:demandium/feature/service/view/Selected_Company.dart';
 import 'package:demandium/feature/service/view/company_screen.dart';
 import 'package:get/get.dart';
 import 'package:demandium/core/initial_binding/initial_binding.dart';
@@ -38,6 +39,7 @@ class RouteHelper {
   static const String html = '/html';
   static const String categories = '/categories';
   static const String companies = '/companies';
+  static const String selectedCompanies = '/selectedCompanies';
   static const String categoryProduct = '/category-product';
   static const String popularFoods = '/popular-foods';
   static const String itemCampaign = '/item-campaign';
@@ -96,6 +98,7 @@ class RouteHelper {
   static String getSearchResultRoute({String? queryText}) => '$searchScreen?query=${queryText ?? ''}';
   static String getServiceRoute(String id) => '$service?id=$id';
   static String getCompanyRoute(String id) => '$companies?id=$id';
+  static String getSelectedCompanyRoute() => '$selectedCompanies';
   static String getProfileRoute() => '$profile';
   static String getEditProfileRoute() => '$profileEdit';
   static String getNotificationRoute() => '$notification';
@@ -315,6 +318,7 @@ class RouteHelper {
               subCategoryIndex: Get.parameters['subCategoryIndex']!,
             ));
       }),
+      GetPage(name: selectedCompanies, page: () => SelectedCompany()),
       GetPage(name: support, page: () => ContactUsPage()),
       GetPage(name: update, page: () => UpdateScreen(isUpdate: Get.parameters['update'] == 'true')),
       GetPage(name: cart, page: () => getRoute(CartScreen(fromNav: false))),

@@ -2,12 +2,10 @@ import 'package:demandium/components/footer_base_view.dart';
 import 'package:demandium/components/menu_drawer.dart';
 import 'package:demandium/feature/service/controller/company_details_controller.dart';
 import 'package:demandium/feature/service/controller/company_details_tab_controller.dart';
-import 'package:demandium/feature/service/widget/service_details_faq_section.dart';
-import 'package:demandium/feature/service/widget/service_info_card.dart';
-import 'package:demandium/feature/service/widget/service_overview.dart';
+import 'package:demandium/feature/service/controller/companydetails.dart';
+import 'package:demandium/feature/service/view/Selected_Company.dart';
 import 'package:get/get.dart';
 import 'package:demandium/core/core_export.dart';
-import 'package:demandium/core/helper/decorated_tab_bar.dart';
 
 class CompanyScreen extends StatefulWidget {
   final String serviceID;
@@ -20,6 +18,27 @@ class CompanyScreen extends StatefulWidget {
 class _CompanyScreenState extends State<CompanyScreen> {
   final ScrollController scrollController = ScrollController();
   final scaffoldState = GlobalKey<ScaffoldState>();
+  final selectedCompanyController = Get.put(SelectedCompany());
+
+  // late List<CompanyDetails> itemList = [
+  //   CompanyDetails(Images.companyLogo, "SIYANCO", "Test and identify problems and repair with expert and experienced electricians", "4 Successful Order", "0.00"),
+  //   CompanyDetails(Images.companyLogo, "SIYANCO", "Test and identify problems and repair with expert and experienced electricians", "3 Successful Order", "0.00"),
+  //   CompanyDetails(Images.companyLogo, "SIYANCO", "Test and identify problems and repair with expert and experienced electricians", "6 Successful Order", "0.00"),
+  //   CompanyDetails(Images.companyLogo, "SIYANCO", "Test and identify problems and repair with expert and experienced electricians", "4 Successful Order", "0.00"),
+  // ];
+
+
+  // List<CompanyDetails> initComDetails = [];
+
+  // void showMultiSelect(BuildContext context) async{
+  //   await showDialog(
+  //       context: context,
+  //       builder: (ctx) {
+  //         return MultiSelectDialog(
+  //             items: itemList.map((e) => MultiSelectItem<CompanyDetails>(e, e.companyName)).toList(),
+  //             initialValue: initComDetails);
+  //       });
+  // }
 
   @override
   void initState() {
@@ -106,78 +125,23 @@ class _CompanyScreenState extends State<CompanyScreen> {
                               ),
                             ],
                           ),
-                          SizedBox(height: Dimensions.PADDING_SIZE_DEFAULT),
-                          Center(
-                            child: Container(
-                              padding: EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                              child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    GridView.builder(
-                                      shrinkWrap: true,
-                                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount: ResponsiveHelper.isDesktop(context) ? 8 : ResponsiveHelper.isTab(context) ? 6 : 1,
-                                        crossAxisSpacing: Dimensions.PADDING_SIZE_SMALL,
-                                        mainAxisSpacing: Dimensions.PADDING_SIZE_SMALL,
-                                        childAspectRatio: ResponsiveHelper.isDesktop(context) ? 1 : 1,
-                                      ),
-                                      physics: AlwaysScrollableScrollPhysics(),
-                                      itemCount: 1,
-                                      itemBuilder: (context, index) {
-                                        return InkWell(
-                                          onTap: () {
-                                          },
-                                          child: Container(
-                                            width: Get.width * 0.9,
-                                            padding: EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                                            decoration: BoxDecoration(
-                                              color: Theme.of(context).hoverColor,
-                                              borderRadius: BorderRadius.all(Radius.circular(Dimensions.RADIUS_DEFAULT), ),
-                                            ),
-                                            child: Row(
-                                                mainAxisAlignment: MainAxisAlignment.start,
-                                                crossAxisAlignment: CrossAxisAlignment.center,
-                                                children: [
-                                                  Image.asset(
-                                                    Images.logo,
-                                                    width: Dimensions.MAINSCREEN_LOGO_SIZE,
-                                                  ),
-                                                  Column(
-                                                    mainAxisAlignment: MainAxisAlignment.center,
-                                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                                    children: [
-                                                      Padding(
-                                                        padding: const EdgeInsets.all( Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                                                        child: Text('Company Name & Info',
-                                                          style: ubuntuRegular.copyWith(fontSize: MediaQuery.of(context).size.width<300?Dimensions.fontSizeExtraSmall:Dimensions.fontSizeSmall),
-                                                          maxLines: MediaQuery.of(context).size.width<300?1:2,textAlign: TextAlign.center, overflow: TextOverflow.ellipsis,
-                                                        ),
-                                                      ),
-                                                      Padding(
-                                                        padding: const EdgeInsets.all( Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                                                        child: Text('Company Name & Info',
-                                                          style: ubuntuRegular.copyWith(fontSize: MediaQuery.of(context).size.width<300?Dimensions.fontSizeExtraSmall:Dimensions.fontSizeSmall),
-                                                          maxLines: MediaQuery.of(context).size.width<300?1:2,textAlign: TextAlign.center, overflow: TextOverflow.ellipsis,
-                                                        ),
-                                                      ),
-                                                      Padding(
-                                                        padding: const EdgeInsets.all( Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                                                        child: Text('Company Name & Info',
-                                                          style: ubuntuRegular.copyWith(fontSize: MediaQuery.of(context).size.width<300?Dimensions.fontSizeExtraSmall:Dimensions.fontSizeSmall),
-                                                          maxLines: MediaQuery.of(context).size.width<300?1:2,textAlign: TextAlign.center, overflow: TextOverflow.ellipsis,
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  )
-                                                ]),
-                                          ),
-                                        );
-                                      },
-                                    ) ,
-                                  ]),
+                          Expanded(
+                            child: Center(
+                              child: Container(
+                                height: MediaQuery.of(context).size.height,
+                                width: Get.width,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
+                                  child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      children: <Widget>[
+                                        Expanded(
+                                            child: selectedCompanyController.build(context))
+                                      ]),
+                                )
+                              ),
                             ),
-                          )
+                          ),
                         ],
                       ),
                     ),
@@ -193,4 +157,3 @@ class _CompanyScreenState extends State<CompanyScreen> {
     );
   }
 }
-

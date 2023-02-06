@@ -1,5 +1,6 @@
 class Images {
   static String get logo => 'logo'.png;
+  static String get companyLogo => 'company_logo'.png;
   static String get backgroundImage => 'backround_image'.png;
   static String get taglineArabic => 'tagLine_arabic'.png;
   static String get taglineEnglish => 'tagLine_english'.png;
