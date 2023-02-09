@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:demandium/feature/service/bindings/company_details_binding.dart';
-import 'package:demandium/feature/service/view/Selected_Company.dart';
 import 'package:demandium/feature/service/view/company_screen.dart';
 import 'package:get/get.dart';
 import 'package:demandium/core/initial_binding/initial_binding.dart';
@@ -318,7 +317,6 @@ class RouteHelper {
               subCategoryIndex: Get.parameters['subCategoryIndex']!,
             ));
       }),
-      GetPage(name: selectedCompanies, page: () => SelectedCompany()),
       GetPage(name: support, page: () => ContactUsPage()),
       GetPage(name: update, page: () => UpdateScreen(isUpdate: Get.parameters['update'] == 'true')),
       GetPage(name: cart, page: () => getRoute(CartScreen(fromNav: false))),

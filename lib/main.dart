@@ -1,6 +1,8 @@
+import 'package:demandium/feature/service/model/company_details_model.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 import 'core/core_export.dart';
 import 'core/helper/language_di.dart' as di;
 import 'core/helper/notification_helper.dart';
@@ -77,29 +79,34 @@ class MyApp extends StatelessWidget {
       _route();
     }
 
-    return GetBuilder<ThemeController>(builder: (themeController) {
-      return GetBuilder<LocalizationController>(builder: (localizeController) {
-        return GetBuilder<SplashController>(builder: (splashController) {
-          return (GetPlatform.isWeb && splashController.configModel.content == null) ? SizedBox() : GetMaterialApp(
-            title: AppConstants.APP_NAME,
-            debugShowCheckedModeBanner: false,
-            navigatorKey: Get.key,
-            scrollBehavior: MaterialScrollBehavior().copyWith(
-              dragDevices: {PointerDeviceKind.mouse, PointerDeviceKind.touch},
-            ),
-            initialBinding: InitialBinding(),
-            theme: themeController.darkTheme ? dark : light,
-            locale: localizeController.locale,
-            translations: Messages(languages: languages),
-            fallbackLocale: Locale(AppConstants.languages[0].languageCode!, AppConstants.languages[0].countryCode),
-            initialRoute: GetPlatform.isWeb ? RouteHelper.getInitialRoute() : RouteHelper.getSplashRoute(bookingID),
-            getPages: RouteHelper.routes,
-            defaultTransition: Transition.topLevel,
-            transitionDuration: Duration(milliseconds: 500),
-          );
+    return MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (_) => CompanyDetailsModelProvider())
+        ],
+      child: GetBuilder<ThemeController>(builder: (themeController) {
+        return GetBuilder<LocalizationController>(builder: (localizeController) {
+          return GetBuilder<SplashController>(builder: (splashController) {
+            return (GetPlatform.isWeb && splashController.configModel.content == null) ? SizedBox() : GetMaterialApp(
+              title: AppConstants.APP_NAME,
+              debugShowCheckedModeBanner: false,
+              navigatorKey: Get.key,
+              scrollBehavior: MaterialScrollBehavior().copyWith(
+                dragDevices: {PointerDeviceKind.mouse, PointerDeviceKind.touch},
+              ),
+              initialBinding: InitialBinding(),
+              theme: themeController.darkTheme ? dark : light,
+              locale: localizeController.locale,
+              translations: Messages(languages: languages),
+              fallbackLocale: Locale(AppConstants.languages[0].languageCode!, AppConstants.languages[0].countryCode),
+              initialRoute: GetPlatform.isWeb ? RouteHelper.getInitialRoute() : RouteHelper.getSplashRoute(bookingID),
+              getPages: RouteHelper.routes,
+              defaultTransition: Transition.topLevel,
+              transitionDuration: Duration(milliseconds: 500),
+            );
+          });
         });
-      });
-    });
+      }),
+    );
   }
 }
 class MyHttpOverrides extends HttpOverrides {
