@@ -5,8 +5,6 @@ import 'package:demandium/feature/service/controller/company_details_tab_control
 import 'package:demandium/feature/service/model/company_details_model.dart';
 import 'package:get/get.dart';
 import 'package:demandium/core/core_export.dart';
-import 'package:multi_select_flutter/multi_select_flutter.dart';
-import 'package:provider/provider.dart';
 
 class CompanyScreen extends StatefulWidget {
   final String serviceID;
@@ -37,9 +35,6 @@ class _CompanyScreenState extends State<CompanyScreen> {
   ];
 
   bool ismultiselected = false;
-  loadList(){
-    List<CompanyDetails> selectedList = [];
-  }
 
   @override
   void initState() {
@@ -130,10 +125,10 @@ class _CompanyScreenState extends State<CompanyScreen> {
                             child: Center(
                               child: Column(
                                 children: [
-                                  filterchipWidget(chipName: itemList1),
-                                  filterchipWidget(chipName: itemList2),
-                                  filterchipWidget(chipName: itemList3),
-                                  filterchipWidget(chipName: itemList4),
+                                  FilterchipWidget(chipName: itemList1),
+                                  FilterchipWidget(chipName: itemList2),
+                                  FilterchipWidget(chipName: itemList3),
+                                  FilterchipWidget(chipName: itemList4),
                                 ],
                               )
                                   ),
@@ -168,17 +163,17 @@ class _CompanyScreenState extends State<CompanyScreen> {
 
 }
 
-class filterchipWidget extends StatefulWidget{
+class FilterchipWidget extends StatefulWidget{
 
   final List<CompanyDetails> chipName;
 
-  const filterchipWidget({Key? key, required this.chipName}) : super(key: key);
+  const FilterchipWidget({Key? key, required this.chipName}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _filterchipWidgetState();
+  State<StatefulWidget> createState() => _FilterchipWidgetState();
 }
 
-class _filterchipWidgetState extends State<filterchipWidget>{
+class _FilterchipWidgetState extends State<FilterchipWidget>{
 
   var _isSelected = false;
   late int indexes;
