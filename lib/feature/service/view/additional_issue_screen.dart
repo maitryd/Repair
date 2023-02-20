@@ -32,7 +32,7 @@ class _AdditionalIssueScreenState extends State<AdditionalIssueScreen> {
   final ImagePicker videoPicker = ImagePicker();
   List<XFile>? imageList = [];
   List<XFile>? dummyImageList = [];
-  XFile? videoList;
+  File? videoList;
   XFile? pdf;
 
   @override
@@ -154,7 +154,7 @@ class _AdditionalIssueScreenState extends State<AdditionalIssueScreen> {
                                                   shape: RoundedRectangleBorder(
                                                       borderRadius: BorderRadius.circular(10.0)),
                                                   child: IconButton(
-                                                      onPressed: () {selectVideos(); },
+                                                      onPressed: () {getVideo(ImageSource.gallery, context: context); },
                                                       icon: Image.asset(
                                                         Images.addVideo,
                                                         width: Dimensions.PADDING_FOR_CHATTING_BUTTON,
@@ -162,7 +162,18 @@ class _AdditionalIssueScreenState extends State<AdditionalIssueScreen> {
                                                   ),
                                                 ),
                                               ),
-                                              showVideo()
+                                              if(videoList != null)...[
+                                                Container(
+                                                  height: 110,
+                                                  width: 280,
+                                                  padding: EdgeInsets.only(top: 10.0, left: 10.0,bottom: 10.0, right: 10.0),
+                                                  child: Card(
+                                                    shape: RoundedRectangleBorder(
+                                                        borderRadius: BorderRadius.circular(10.0)),
+                                                    child: showVideo(videoList),
+                                                  ),
+                                                )
+                                              ]
                                             ],
                                           )
                                         ],
@@ -314,21 +325,52 @@ class _AdditionalIssueScreenState extends State<AdditionalIssueScreen> {
     print("Image list Length:" + list!.length.toString());
   }
 
-  File? selectedVideo;
-  VideoPlayerController? _videoPlayerController;
-  ImagePicker? picker = ImagePicker();
+  XFile? selectedVideo;
+  bool isVideo = false;
+  late VideoPlayerController _controller;
+  ImagePicker _picker = ImagePicker();
+  VideoPlayerController? _toBeDisposed;
 
-  void selectVideos() async {
-    PickedFile? video = await picker!.getVideo(source: ImageSource.gallery);
-    selectedVideo = File(video!.path);
-    _videoPlayerController = VideoPlayerController.file(selectedVideo!)..initialize().then((_) {
-      setState(() {
-      });
-      _videoPlayerController?.play();
-    });
-    if (selectedVideo != null) {
-      print("Video list Length:");
-      print(selectedVideo);
+  Future<void> getVideo(ImageSource imageSource, {BuildContext? context}) async {
+    if (_controller != null) {
+      await _controller!.setVolume(0.0);
+    }
+    if (isVideo) {
+      final XFile? file = await _picker.pickVideo(
+          source: imageSource, maxDuration: const Duration(seconds: 10));
+      await _playVideo(file);
+    }
+  }
+
+  Future<void> _disposeVideoController() async {
+    if (_toBeDisposed != null) {
+      await _toBeDisposed!.dispose();
+    }
+    _toBeDisposed = _controller;
+    //_controller = null;
+  }
+
+  Future<void> _playVideo(XFile? file) async {
+    if (file != null && mounted) {
+      await _disposeVideoController();
+      late VideoPlayerController controller;
+      if (kIsWeb) {
+        controller = VideoPlayerController.network(file.path);
+      } else {
+        controller = VideoPlayerController.file(File(file.path));
+      }
+      _controller = controller;
+      // In web, most browsers won't honor a programmatic call to .play
+      // if the video has a sound track (and is not muted).
+      // Mute the video so it auto-plays in web!
+      // This is not needed if the call to .play is the result of user
+      // interaction (clicking on a "play" button, for example).
+      const double volume = kIsWeb ? 0.0 : 1.0;
+      await controller.setVolume(volume);
+      await controller.initialize();
+      await controller.setLooping(true);
+      await controller.play();
+      setState(() {});
     }
   }
 
@@ -405,12 +447,12 @@ class _AdditionalIssueScreenState extends State<AdditionalIssueScreen> {
     );
   }
 
-  Widget showVideo() {
+  Widget showVideo(File? list) {
     return Center(
-      child: selectedVideo != null ?
-        AspectRatio(aspectRatio: _videoPlayerController!.value.aspectRatio,
-          child: VideoPlayer(_videoPlayerController!),)
-          : Container(child: Text("No video"),)
+      child: Container(child: Image.file(
+        File(list!.path),
+        fit: BoxFit.cover,
+      ),)
     );
   }
 }
