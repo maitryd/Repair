@@ -208,6 +208,51 @@ class CartController extends GetxController implements GetxService {
 
   }
 
+  Future<void> addCartToServer(String? id) async {
+    _isLoading = true;
+    update();
+    _replaceCartList();
+
+    if(_initialCartList.first.subCategoryId != _cartList.first.subCategoryId){
+      Get.back();
+      Get.dialog(ConfirmationDialog(
+        icon: Images.warning,
+        title: "are_you_sure_to_reset".tr,
+        description: 'you_have_service_from_other_sub_category'.tr,
+        onNoPressed: (){
+          Get.back();
+        },
+        onYesPressed: () async {
+          Get.toNamed(RouteHelper.getCompanyRoute(id!), arguments: CompanyScreen(serviceID : id));
+          Get.dialog(CustomLoader(), barrierDismissible: false,);
+          await cartRepo.removeAllCartFromServer();
+          if(_initialCartList.length > 0){
+            for (int index=0; index<_initialCartList.length;index++){
+              await addToCartApi(_initialCartList[index]);
+            }
+          }
+          _isLoading = false;
+          onDemandToast("successfully_added_to_cart".tr,Colors.green);
+          clearCartList();
+          await getCartListFromServer();
+          Get.toNamed(RouteHelper.getCompanyRoute(id!), arguments: CompanyScreen(serviceID : id));
+        },
+      ));
+    }else{
+      await cartRepo.removeAllCartFromServer();
+      if(_cartList.length > 0){
+        for (int index=0; index<_cartList.length;index++){
+          await addToCartApi(_cartList[index]);
+        }
+      }
+      _isLoading = false;
+      onDemandToast("successfully_added_to_cart".tr,Colors.green);
+      clearCartList();
+      Get.toNamed(RouteHelper.getCompanyRoute(id!), arguments: CompanyScreen(serviceID : id));
+    }
+    update();
+  }
+
   Future<void> addMultipleCartToServer() async {
     _isLoading = true;
     update();

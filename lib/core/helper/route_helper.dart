@@ -1,5 +1,7 @@
 import 'dart:convert';
 import 'package:demandium/feature/service/bindings/company_details_binding.dart';
+import 'package:demandium/feature/service/view/additional_issue_screen.dart';
+import 'package:demandium/feature/service/view/company_details_screen.dart';
 import 'package:demandium/feature/service/view/company_screen.dart';
 import 'package:get/get.dart';
 import 'package:demandium/core/initial_binding/initial_binding.dart';
@@ -39,6 +41,7 @@ class RouteHelper {
   static const String categories = '/categories';
   static const String companies = '/companies';
   static const String selectedCompanies = '/selectedCompanies';
+  static const String additionalIssue = '/additionalIssue';
   static const String categoryProduct = '/category-product';
   static const String popularFoods = '/popular-foods';
   static const String itemCampaign = '/item-campaign';
@@ -98,6 +101,7 @@ class RouteHelper {
   static String getServiceRoute(String id) => '$service?id=$id';
   static String getCompanyRoute(String id) => '$companies?id=$id';
   static String getSelectedCompanyRoute() => '$selectedCompanies';
+  static String getAdditionalIssueRoute() => '$additionalIssue';
   static String getProfileRoute() => '$profile';
   static String getEditProfileRoute() => '$profileEdit';
   static String getNotificationRoute() => '$notification';
@@ -318,6 +322,8 @@ class RouteHelper {
             ));
       }),
       GetPage(name: support, page: () => ContactUsPage()),
+      GetPage(name: selectedCompanies, page: () => CompanyDetailsScreen(company_image: Get.parameters['company_image'], company_name: Get.parameters['company_name'], company_rating: Get.parameters['company_rating'],)),
+      GetPage(name: additionalIssue, page: () => AdditionalIssueScreen()),
       GetPage(name: update, page: () => UpdateScreen(isUpdate: Get.parameters['update'] == 'true')),
       GetPage(name: cart, page: () => getRoute(CartScreen(fromNav: false))),
       GetPage(name: addAddress, page: () => getRoute(AddAddressScreen(fromCheckout: Get.parameters['page'] == 'checkout'))),

@@ -3,6 +3,8 @@ import 'package:demandium/components/menu_drawer.dart';
 import 'package:demandium/feature/service/controller/company_details_controller.dart';
 import 'package:demandium/feature/service/controller/company_details_tab_controller.dart';
 import 'package:demandium/feature/service/model/company_details_model.dart';
+import 'package:demandium/feature/service/view/additional_issue_screen.dart';
+import 'package:demandium/feature/service/view/company_details_screen.dart';
 import 'package:get/get.dart';
 import 'package:demandium/core/core_export.dart';
 
@@ -71,72 +73,93 @@ class _CompanyScreenState extends State<CompanyScreen> {
                     }
                   }
                 }
-                return  FooterBaseView(
-                  isScrollView:ResponsiveHelper.isMobile(context) ? false: true,
-                  child: SizedBox(
-                    width: Dimensions.WEB_MAX_WIDTH,
-                    child: DefaultTabController(
-                      length: Get.find<CompanyDetailsController>().service!.faqs!.length > 0 ? 3 :2,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          if(!ResponsiveHelper.isMobile(context) && !ResponsiveHelper.isTab(context))
-                            SizedBox(height: Dimensions.PADDING_SIZE_DEFAULT,),
-                          Stack(
+                return Column(
+                  children: [
+                    Expanded(child: FooterBaseView(
+                      isScrollView:ResponsiveHelper.isMobile(context) ? false: true,
+                      child: SizedBox(
+                        width: Dimensions.WEB_MAX_WIDTH,
+                        child: DefaultTabController(
+                          length: Get.find<CompanyDetailsController>().service!.faqs!.length > 0 ? 3 :2,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Column(
+                              if(!ResponsiveHelper.isMobile(context) && !ResponsiveHelper.isTab(context))
+                                SizedBox(height: Dimensions.PADDING_SIZE_DEFAULT,),
+                              Stack(
                                 children: [
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.all((!ResponsiveHelper.isMobile(context) && !ResponsiveHelper.isTab(context)) ?  Radius.circular(8): Radius.circular(0.0)),
-                                    child: Stack(
-                                      children: [
-                                        Center(
-                                          child: Container(
-                                            width: Dimensions.WEB_MAX_WIDTH,
-                                            height: ResponsiveHelper.isDesktop(context) ? 280:150,
-                                            child: CustomImage(
-                                              image: '${Get.find<SplashController>().configModel.content!.imageBaseUrl!}/service/${service.coverImage}',
+                                  Column(
+                                    children: [
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.all((!ResponsiveHelper.isMobile(context) && !ResponsiveHelper.isTab(context)) ?  Radius.circular(8): Radius.circular(0.0)),
+                                        child: Stack(
+                                          children: [
+                                            Center(
+                                              child: Container(
+                                                width: Dimensions.WEB_MAX_WIDTH,
+                                                height: ResponsiveHelper.isDesktop(context) ? 280:150,
+                                                child: CustomImage(
+                                                  image: '${Get.find<SplashController>().configModel.content!.imageBaseUrl!}/service/${service.coverImage}',
+                                                ),
+                                              ),
                                             ),
-                                          ),
-                                        ),
-                                        Center(
-                                          child: Container(
-                                            width: Dimensions.WEB_MAX_WIDTH,
-                                            height: ResponsiveHelper.isDesktop(context) ? 280:150,
-                                            decoration: BoxDecoration(
-                                                color: Colors.black.withOpacity(0.6)
+                                            Center(
+                                              child: Container(
+                                                width: Dimensions.WEB_MAX_WIDTH,
+                                                height: ResponsiveHelper.isDesktop(context) ? 280:150,
+                                                decoration: BoxDecoration(
+                                                    color: Colors.black.withOpacity(0.6)
+                                                ),
+                                              ),
                                             ),
-                                          ),
+                                            Container(
+                                              width: Dimensions.WEB_MAX_WIDTH,
+                                              height: ResponsiveHelper.isDesktop(context) ? 280:150,
+                                              child: Center(child: Text(service.name ?? '',
+                                                  style: ubuntuMedium.copyWith(fontSize: Dimensions.fontSizeExtraLarge, color: Colors.white))),
+                                            ),
+                                          ],
                                         ),
-                                        Container(
-                                          width: Dimensions.WEB_MAX_WIDTH,
-                                          height: ResponsiveHelper.isDesktop(context) ? 280:150,
-                                          child: Center(child: Text(service.name ?? '',
-                                              style: ubuntuMedium.copyWith(fontSize: Dimensions.fontSizeExtraLarge, color: Colors.white))),
-                                        ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
+                              Expanded(
+                                child: Center(
+                                    child: Column(
+                                      children: [
+                                        FilterchipWidget(chipName: itemList1, serviceID: '',),
+                                        FilterchipWidget(chipName: itemList2, serviceID: '',),
+                                        FilterchipWidget(chipName: itemList3, serviceID: '',),
+                                        FilterchipWidget(chipName: itemList4, serviceID: '',),
+                                      ],
+                                    )
+                                ),
+                              ),
                             ],
                           ),
-                          Expanded(
-                            child: Center(
-                              child: Column(
-                                children: [
-                                  FilterchipWidget(chipName: itemList1),
-                                  FilterchipWidget(chipName: itemList2),
-                                  FilterchipWidget(chipName: itemList3),
-                                  FilterchipWidget(chipName: itemList4),
-                                ],
-                              )
-                                  ),
-                                )
-                        ],
+                        ),
+                      ),
+                    )),
+                    Padding(
+                      padding: EdgeInsets.only(
+                        left: Dimensions.PADDING_SIZE_DEFAULT,
+                        right: Dimensions.PADDING_SIZE_DEFAULT,
+                        bottom: Dimensions.PADDING_SIZE_SMALL,
+                      ),
+                      child: CustomButton(
+                        width: Get.width,
+                        radius: Dimensions.RADIUS_DEFAULT,
+                        buttonText: 'Proceed to Add Details',
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
+                            return AdditionalIssueScreen();
+                          }));
+                        },
                       ),
                     ),
-                  ),
+                  ],
                 );
               }else{
                 return NoDataScreen(text: 'no_service_available'.tr,type: NoDataType.SERVICE,);
@@ -164,10 +187,9 @@ class _CompanyScreenState extends State<CompanyScreen> {
 }
 
 class FilterchipWidget extends StatefulWidget{
-
+  final String serviceID;
   final List<CompanyDetails> chipName;
-
-  const FilterchipWidget({Key? key, required this.chipName}) : super(key: key);
+  const FilterchipWidget({Key? key, required this.chipName, required this.serviceID}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _FilterchipWidgetState();
@@ -182,133 +204,136 @@ class _FilterchipWidgetState extends State<FilterchipWidget>{
   Widget build(BuildContext context) {
     return Expanded(
         child: Padding(
-          padding: EdgeInsets.all(10.0),
-          child: ChoiceChip(
-            backgroundColor: Colors.grey[100],
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0),
-              side: BorderSide(
-              color: Colors.grey,
-            ),
-            ),
-            label: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Expanded(
-                      child: ListView.builder(
-                          scrollDirection: Axis.vertical,
-                          itemCount: widget.chipName.length,
-                          itemBuilder: (context, index) {
-                            return Container(
-                               padding: EdgeInsets.only(top: 5.0),
-                                //padding: EdgeInsets.all(10),
-                                child: Stack(
-                                  children: <Widget>[
-                                    Positioned(
-                                      right: 2.0,
-                                      child: Text("View Profile",
-                                          style: TextStyle(
-                                              fontSize: 12.0,
-                                              color: Colors.blueAccent,
-                                              fontWeight: FontWeight.bold)),),
-                                    Column(
-                                      children: <Widget>[
-                                        Row(
-                                          children: [
-                                            Padding(
-                                              padding: EdgeInsets.only(left: 10.0, top: 5.0, bottom: 5.0),
-                                              child: Positioned(
-                                                  child: Container(
-                                                    height: Dimensions.PAGES_BOTTOM_PADDING,
-                                                    width: Dimensions.PAGES_BOTTOM_PADDING,
-                                                    decoration: BoxDecoration(
-                                                        borderRadius: BorderRadius.circular(10.0), color: Colors.grey
+          padding: EdgeInsets.all(0.0),
+          child: Container(
+            child: Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Expanded(
+                        child: ListView.builder(
+                            scrollDirection: Axis.vertical,
+                            itemCount: widget.chipName.length,
+                            itemBuilder: (context, index) {
+                              return Container(
+                                 padding: EdgeInsets.only(top: 5.0),
+                                  //padding: EdgeInsets.all(10),
+                                  child: Stack(
+                                    children: <Widget>[
+                                      Positioned(
+                                        bottom: 80.0,
+                                        right: 5.0,
+                                        child: TextButton(
+                                            child: Text("View Profile",
+                                                style: TextStyle(
+                                                fontSize: 12.0,
+                                                color: Colors.blueAccent,
+                                                fontWeight: FontWeight.bold)),
+                                            onPressed: () {
+                                              Get.toNamed(RouteHelper.getSelectedCompanyRoute(),
+                                                  arguments: CompanyDetailsScreen(
+                                                company_image: widget.chipName[index].companyIcon,
+                                                company_name: widget.chipName[index].companyName,
+                                                company_rating: widget.chipName[index].rating,));
+                                              },
+                                        ),
+                                      ),
+                                      Column(
+                                        children: <Widget>[
+                                          Row(
+                                            children: [
+                                              Padding(
+                                                padding: EdgeInsets.only(left: 10.0, top: 5.0, bottom: 5.0),
+                                                child: Positioned(
+                                                    child: Container(
+                                                      height: Dimensions.PAGES_BOTTOM_PADDING,
+                                                      width: Dimensions.PAGES_BOTTOM_PADDING,
+                                                      decoration: BoxDecoration(
+                                                          borderRadius: BorderRadius.circular(10.0), color: Colors.grey
+                                                      ),
+                                                      child: Image.asset(
+                                                        Images.companyLogo,
+                                                        fit: BoxFit.cover,
+                                                      ),
+                                                    )),
+                                              ),
+                                              Padding(padding: EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL)),
+                                              Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Container(
+                                                    padding: const EdgeInsets.all( Dimensions.PADDING_SIZE_MINI),
+                                                    child: Text(widget.chipName[index].companyName,
+                                                      style: ubuntuRegular.copyWith(fontSize: MediaQuery.of(context).size.width<300?Dimensions.fontSizeExtraSmall:Dimensions.fontSizeSmall, fontWeight: FontWeight.bold),
+                                                      maxLines: MediaQuery.of(context).size.width<300?1:3, overflow: TextOverflow.ellipsis,
                                                     ),
-                                                    child: Image.asset(
-                                                      Images.companyLogo,
-                                                      fit: BoxFit.cover,
+                                                  ),
+                                                  Container(
+                                                    width: 240,
+                                                    padding: const EdgeInsets.all( Dimensions.PADDING_SIZE_MINI),
+                                                    child: Text(widget.chipName[index].description,
+                                                      style: ubuntuRegular.copyWith(fontSize: MediaQuery.of(context).size.width<300?Dimensions.fontSizeExtraSmall:Dimensions.fontSizeSmall, fontWeight: FontWeight.w500),
+                                                      maxLines: MediaQuery.of(context).size.width<300?1:3, overflow: TextOverflow.ellipsis,
                                                     ),
-                                                  )),
+                                                  ),
+                                                  Container(
+                                                    padding: const EdgeInsets.all( Dimensions.PADDING_SIZE_MINI),
+                                                    child: Text(widget.chipName[index].order,
+                                                      style: ubuntuRegular.copyWith(fontSize: MediaQuery.of(context).size.width<300?Dimensions.fontSizeExtraSmall:Dimensions.fontSizeSmall,
+                                                          color: Colors.green, fontWeight: FontWeight.bold),
+                                                      maxLines: MediaQuery.of(context).size.width<300?1:2,textAlign: TextAlign.center, overflow: TextOverflow.ellipsis,
+                                                    ),
+                                                  ),
+                                                  Row(
+                                                    children: [
+                                                      Container(
+                                                        padding: const EdgeInsets.all( Dimensions.PADDING_SIZE_MINI),
+                                                        child: Icon(Icons.star, color: Colors.amber,),
+                                                      ),
+                                                      Container(
+                                                        padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_MINI),
+                                                        child: Text(widget.chipName[index].rating, style: ubuntuRegular.copyWith(fontSize: MediaQuery.of(context).size.width<300?Dimensions.fontSizeExtraSmall:Dimensions.fontSizeSmall,
+                                                            color: Colors.amber, fontWeight: FontWeight.bold),),
+                                                      ),
+                                                      Container(
+                                                        padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_MINI),
+                                                        child: Text("(0)", style: ubuntuRegular.copyWith(fontSize: MediaQuery.of(context).size.width<300?Dimensions.fontSizeExtraSmall:Dimensions.fontSizeSmall,),),
+                                                      )
+                                                    ],
+                                                  )
+                                                ],
+                                              )
+                                            ],
+                                          )
+                                        ],
+                                      ),
+                                      SizedBox(height: 10.0,),
+                                      Positioned(
+                                          bottom: 1.0,
+                                          right: 5.0,
+                                          child: SizedBox(
+                                            height: 25,
+                                            width: 90,
+                                            child: ElevatedButton(
+                                              onPressed: (){
+                                                setState(() => _isSelected = !_isSelected);
+                                              },
+                                              child: _isSelected ? Text("Selected") : Text("Select"),
+                                              style: ElevatedButton.styleFrom(
+                                                backgroundColor: _isSelected ? Colors.green : Theme.of(context).colorScheme.primary, // This is what you need!
+                                              ),
                                             ),
-                                            Padding(padding: EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL)),
-                                            Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children: [
-                                                Container(
-                                                  padding: const EdgeInsets.all( Dimensions.PADDING_SIZE_MINI),
-                                                  child: Text(widget.chipName[index].companyName,
-                                                    style: ubuntuRegular.copyWith(fontSize: MediaQuery.of(context).size.width<300?Dimensions.fontSizeExtraSmall:Dimensions.fontSizeSmall, fontWeight: FontWeight.bold),
-                                                    maxLines: MediaQuery.of(context).size.width<300?1:3, overflow: TextOverflow.ellipsis,
-                                                  ),
-                                                ),
-                                                Container(
-                                                  width: 240,
-                                                  padding: const EdgeInsets.all( Dimensions.PADDING_SIZE_MINI),
-                                                  child: Text(widget.chipName[index].description,
-                                                    style: ubuntuRegular.copyWith(fontSize: MediaQuery.of(context).size.width<300?Dimensions.fontSizeExtraSmall:Dimensions.fontSizeSmall, fontWeight: FontWeight.w500),
-                                                    maxLines: MediaQuery.of(context).size.width<300?1:3, overflow: TextOverflow.ellipsis,
-                                                  ),
-                                                ),
-                                                Container(
-                                                  padding: const EdgeInsets.all( Dimensions.PADDING_SIZE_MINI),
-                                                  child: Text(widget.chipName[index].order,
-                                                    style: ubuntuRegular.copyWith(fontSize: MediaQuery.of(context).size.width<300?Dimensions.fontSizeExtraSmall:Dimensions.fontSizeSmall,
-                                                        color: Colors.green, fontWeight: FontWeight.bold),
-                                                    maxLines: MediaQuery.of(context).size.width<300?1:2,textAlign: TextAlign.center, overflow: TextOverflow.ellipsis,
-                                                  ),
-                                                ),
-                                                Row(
-                                                  children: [
-                                                    Container(
-                                                      padding: const EdgeInsets.all( Dimensions.PADDING_SIZE_MINI),
-                                                      child: Icon(Icons.star, color: Colors.amber,),
-                                                    ),
-                                                    Container(
-                                                      padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_MINI),
-                                                      child: Text(widget.chipName[index].rating, style: ubuntuRegular.copyWith(fontSize: MediaQuery.of(context).size.width<300?Dimensions.fontSizeExtraSmall:Dimensions.fontSizeSmall,
-                                                          color: Colors.amber, fontWeight: FontWeight.bold),),
-                                                    ),
-                                                    Container(
-                                                      padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_MINI),
-                                                      child: Text("(0)", style: ubuntuRegular.copyWith(fontSize: MediaQuery.of(context).size.width<300?Dimensions.fontSizeExtraSmall:Dimensions.fontSizeSmall,),),
-                                                    )
-                                                  ],
-                                                )
-                                              ],
-                                            )
-                                          ],
-                                        )
-                                      ],
-                                    ),
-                                    SizedBox(height: 10.0,),
-                                    Positioned(
-                                        bottom: 1.0,
-                                        right: 2.0,
-                                        child: SizedBox(
-                                          height: 25,
-                                          width: 90,
-                                          child: ElevatedButton(
-                                            onPressed: (){
-                                              setState(() => _isSelected = !_isSelected);
-                                            },
-                                            child: _isSelected ? Text("Selected") : Text("Select"),
-                                            style: ElevatedButton.styleFrom(
-                                              backgroundColor: _isSelected ? Colors.green : Theme.of(context).colorScheme.primary, // This is what you need!
-                                            ),
-                                          ),
-                                        )
-                                    )
-                                  ],
-                                ));
-                          }))
-                ]),
-            selected: _isSelected,
-            onSelected: (isSelected) {
-              setState(() {
-                _isSelected = isSelected;
-              });
-            },
-            selectedColor: Colors.grey[100],
+                                          )
+                                      )
+                                    ],
+                                  ));
+                            }))
+                  ]),
+            ),
           ),
         )
     );

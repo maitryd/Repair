@@ -240,7 +240,7 @@ class _ProductBottomSheetState extends State<ServiceCenterDialog> {
                               if(_addToCart) {
                                 _addToCart = false;
                                 if(Get.find<AuthController>().isLoggedIn()){
-                                  await cartController.addMultipleCartToServer();
+                                  await cartController.addCartToServer(widget.service?.id);
                                   await cartController.getCartListFromServer();
                                   // Get.back();
 

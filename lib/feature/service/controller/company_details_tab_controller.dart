@@ -17,13 +17,13 @@ class CompanyTabController extends GetxController with GetSingleTickerProviderSt
   List<Widget> serviceDetailsTabs(){
     if(faqs!.length > 0){
       return  [
-        Tab(child: Text("service_overview".tr,maxLines: 2,),),
+        Tab(child: Text("Company Overview".tr,maxLines: 2,),),
         Tab(child: Text("faqs".tr,maxLines: 2,),),
         Tab(child: Text("reviews".tr,maxLines: 2,),),
       ];
     }
     return  [
-      Tab(child: Text("service_overview".tr,maxLines: 2,),),
+      Tab(child: Text("Company Overview".tr,maxLines: 2,),),
       Tab(child: Text("reviews".tr,maxLines: 2,),),
     ];
   }
