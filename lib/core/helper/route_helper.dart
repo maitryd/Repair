@@ -100,7 +100,7 @@ class RouteHelper {
   static String getSearchResultRoute({String? queryText}) => '$searchScreen?query=${queryText ?? ''}';
   static String getServiceRoute(String id) => '$service?id=$id';
   static String getCompanyRoute(String id) => '$companies?id=$id';
-  static String getSelectedCompanyRoute() => '$selectedCompanies';
+  static String getSelectedCompanyRoute({required String company_image}) => '$selectedCompanies';
   static String getAdditionalIssueRoute() => '$additionalIssue';
   static String getProfileRoute() => '$profile';
   static String getEditProfileRoute() => '$profileEdit';

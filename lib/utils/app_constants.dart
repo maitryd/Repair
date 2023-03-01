@@ -5,7 +5,9 @@ import 'package:demandium/utils/images.dart';
 class AppConstants {
   static const String APP_NAME = 'Repair';
   static const double APP_VERSION = 1.1;
-  static const String BASE_URL = 'https://demandium-admin.6amtech.com';
+  //static const String BASE_URL = 'https://demandium-admin.6amtech.com';
+  static const String BASE_URL =
+      'https://intelligent-almeida.103-50-161-197.plesk.page';
   static const String CATEGORY_URI = '/api/v1/customer/category?limit=20';
   static const String WEB_LANDING_CONTENTS =
       '/api/v1/customer/landing/contents';

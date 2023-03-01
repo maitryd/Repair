@@ -124,7 +124,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         CampaignView(),
                         RecommendedServiceView(),
                         SizedBox(height: Dimensions.PADDING_SIZE_DEFAULT,),
-
                         (ResponsiveHelper.isMobile(context) || ResponsiveHelper.isTab(context))?  Padding(
                           padding: EdgeInsets.fromLTRB(Dimensions.PADDING_SIZE_DEFAULT, 15, Dimensions.PADDING_SIZE_DEFAULT,  Dimensions.PADDING_SIZE_SMALL,),
                           child: TitleWidget(

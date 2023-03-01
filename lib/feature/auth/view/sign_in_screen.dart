@@ -234,7 +234,6 @@ class _SignInScreenState extends State<SignInScreen> {
                           ],
                         ),
                         SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_MORE_LARGE,),
-
                       ]),
                     ),
                   );

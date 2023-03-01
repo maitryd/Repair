@@ -166,7 +166,7 @@ class ServiceModelView extends StatelessWidget {
                   SizedBox(
                     height: 30.0,
                     width: 100.0,
-                    child: CustomButton(
+                    child: CustomButtonSmall(
                       buttonText: 'Book Now'.tr,
                       onPressed: () {
                         Get.toNamed(

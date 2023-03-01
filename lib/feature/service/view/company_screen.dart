@@ -18,7 +18,7 @@ class CompanyScreen extends StatefulWidget {
 
 class _CompanyScreenState extends State<CompanyScreen> {
 
-  late Color color;
+  var _isSelected = false;
 
   final ScrollController scrollController = ScrollController();
   final scaffoldState = GlobalKey<ScaffoldState>();
@@ -36,7 +36,22 @@ class _CompanyScreenState extends State<CompanyScreen> {
     CompanyDetails(Images.companyLogo, "SAMSUNG", "Test and identify problems and repair with expert and experienced electricians", "3 Successful Order", "0.00"),
   ];
 
-  bool ismultiselected = false;
+  // List<CompanyDetails> itemList1 = <CompanyDetails>[
+  //   CompanyDetails(Images.companyLogo, "VOLTAS", "Test and identify problems and repair with expert and experienced electricians", "6 Successful Order", "0.00"),
+  // ];
+  // late List<CompanyDetails> itemList3 = [
+  //   CompanyDetails(Images.companyLogo, "TATA", "Test and identify problems and repair with expert and experienced electricians", "8 Successful Order", "0.00"),
+  // ];
+  // late List<CompanyDetails> itemList4 = [
+  //   CompanyDetails(Images.companyLogo, "SAMSUNG", "Test and identify problems and repair with expert and experienced electricians", "3 Successful Order", "0.00"),
+  // ];
+
+  bool isDescending = false;
+  bool isAlphabetsSorting = false;
+  bool isRatingDescending = false;
+  late String item1;
+  late String item2;
+  String? _result;
 
   @override
   void initState() {
@@ -55,7 +70,77 @@ class _CompanyScreenState extends State<CompanyScreen> {
     return Scaffold(
       key: scaffoldState,
       endDrawer:ResponsiveHelper.isDesktop(context) ? MenuDrawer():null,
-      appBar: CustomAppBar(centerTitle: false, title: 'Select Companies'.tr,showCart: true,),
+      appBar: AppBar(
+        title: Text("Select Companies",
+          style: TextStyle(fontSize: Dimensions.fontSizeLarge),),
+          actions: [
+            IconButton(
+              icon: Icon(Icons.sort, size: Dimensions.CART_WIDGET_SIZE,),
+              onPressed: () {
+                showModalBottomSheet(
+                    context: context,
+                    builder: (context) {
+                      return Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          ListTile(
+                            title: Center(child: Text('A TO Z')),
+                            onTap: () {
+                              setState(() {
+                                isAlphabetsSorting = true;
+                                isDescending = false;
+                              });
+                              print('Rating a To z');
+                              print("isDescending");
+                              print(isDescending);
+                              Navigator.pop(context);
+                            },
+                          ),
+                          ListTile(
+                            title: Center(child: Text('Z TO A')),
+                            onTap: () {
+                              setState(() {
+                                isAlphabetsSorting = true;
+                                isDescending = true;
+                              });
+                              print('Rating z To a');
+                              Navigator.pop(context);
+                            },
+                          ),
+                          ListTile(
+                            title: Center(child: Text('Rating High To Low')),
+                            onTap: () {
+                              setState(() {
+                                isAlphabetsSorting = false;
+                                isRatingDescending = true;
+                              });
+                              print('Rating High To Low');
+                              Navigator.pop(context);
+                            },
+                          ),
+                          ListTile(
+                            title: Center(child: Text('Rating Low To High')),
+                            onTap: () {
+                              setState(() {
+                                isAlphabetsSorting = false;
+                                isRatingDescending = false;
+                              });
+                              print('Rating low To high');
+                              Navigator.pop(context);
+                            },
+                          ),
+                        ],
+                      );
+                    });
+              },),
+            IconButton(
+              icon: Image.asset(Images.search_White, height:  Dimensions.CART_WIDGET_SIZE, width:  Dimensions.CART_WIDGET_SIZE,),
+              onPressed: () async{
+                searchlabel(details);
+              },)
+          ]
+      ),
+      // CustomAppBar(centerTitle: false, title: 'Select Companies'.tr,showCart: true,),
       body: GetBuilder<CompanyDetailsController>(
           initState: (state) {
             Get.find<CompanyDetailsController>().getServiceDetails(widget.serviceID);},
@@ -170,6 +255,18 @@ class _CompanyScreenState extends State<CompanyScreen> {
           }),
     );
   }
+  var details;
+  void searchlabel(String query){
+    final suggestion = itemList1.where((item) {
+      final companytitle = item.companyName.toLowerCase();
+      final input = query.toLowerCase();
+      return companytitle.contains(input);
+    }).toList();
+    setState(() {
+       details= suggestion;
+    });
+    print(details);
+  }
 
   bool checkedValue = false;
 
@@ -234,11 +331,9 @@ class _FilterchipWidgetState extends State<FilterchipWidget>{
                                                 color: Colors.blueAccent,
                                                 fontWeight: FontWeight.bold)),
                                             onPressed: () {
-                                              Get.toNamed(RouteHelper.getSelectedCompanyRoute(),
-                                                  arguments: CompanyDetailsScreen(
-                                                company_image: widget.chipName[index].companyIcon,
-                                                company_name: widget.chipName[index].companyName,
-                                                company_rating: widget.chipName[index].rating,));
+                                              Get.toNamed(RouteHelper.getSelectedCompanyRoute(
+                                                  company_image: widget.chipName[index].companyIcon,
+                                              ));
                                               },
                                         ),
                                       ),

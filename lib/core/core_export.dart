@@ -118,6 +118,7 @@ export 'package:demandium/components/service_shimmer.dart';
 export 'package:demandium/components/custom_image.dart';
 export 'package:demandium/feature/root/view/not_available_widget.dart';
 export 'package:demandium/components/custom_button.dart';
+export 'package:demandium/components/custom_button_small.dart';
 export 'package:demandium/feature/location/repository/location_repo.dart';
 export 'package:demandium/feature/profile/model/userinfo_model.dart';
 export 'package:demandium/feature/splash/controller/splash_controller.dart';

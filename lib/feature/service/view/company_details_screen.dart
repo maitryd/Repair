@@ -33,7 +33,8 @@ class CompanyDetailsScreen extends StatelessWidget {
   final scaffoldState = GlobalKey<ScaffoldState>();
 
   late List<CompanyDetails> itemList1 = [
-    CompanyDetails(Images.companyLogo, "SIYANCO", "Test and identify problems and repair with expert and experienced electricians", "4 Successful Order", "0.00"),
+    //CompanyDetails(companyIcon: Images.companyLogo, companyName: "SIYANCO", description: "Test and identify problems and repair with expert and experienced electricians", order: "4 Successful Order", rating: "0.00", ),
+    CompanyDetails(Images.companyLogo, "SIYANCO", "Test and identify problems and repair with expert and experienced electricians", "4 Successful Order", "0.00", ),
   ];
 
   @override

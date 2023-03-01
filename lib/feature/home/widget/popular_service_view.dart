@@ -114,7 +114,20 @@ class PopularServiceView extends GetView<ServiceController> {
                                                   child: Text(
                                                       service.name!,
                                                       style: ubuntuMedium.copyWith(fontSize: Dimensions.fontSizeDefault),
-                                                      maxLines: 2, overflow: TextOverflow.ellipsis, textAlign: TextAlign.center),
+                                                      maxLines: 1, overflow: TextOverflow.ellipsis, textAlign: TextAlign.center),
+                                                ),
+                                                Padding(
+                                                  padding: const EdgeInsets.all(
+                                                      Dimensions.PADDING_SIZE_MINI),
+                                                  child: Text(
+                                                    service.shortDescription!,
+                                                    style: ubuntuLight.copyWith(
+                                                        fontSize: Dimensions.fontSizeExtraSmall,
+                                                        color: Theme.of(context).disabledColor),
+                                                    maxLines: 2,
+                                                    overflow: TextOverflow.ellipsis,
+                                                    textAlign: TextAlign.start,
+                                                  ),
                                                 ),
                                               ],
                                             ),
@@ -127,8 +140,8 @@ class PopularServiceView extends GetView<ServiceController> {
                                     ),),
                                 ],),
                               Positioned(
-                                bottom: 10.0,
-                                right: 10.0,
+                                bottom: 4.0,
+                                right: 4.0,
                                 child: Stack(
                                   children: [
                                     Align(
@@ -136,13 +149,13 @@ class PopularServiceView extends GetView<ServiceController> {
                                         child: SizedBox(
                                           height: 30.0,
                                           width: 100.0,
-                                          child: CustomButton(
+                                          child: CustomButtonSmall(
                                             buttonText: 'Book Now'.tr,
                                           ),
                                         )
                                     ),
                                     Positioned.fill(
-                                      child: CustomButton(
+                                      child: CustomButtonSmall(
                                         buttonText: 'Book Now'.tr,
                                         onPressed: () => showModalBottomSheet(
                                             context: context,

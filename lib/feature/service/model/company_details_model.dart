@@ -8,11 +8,12 @@ class CompanyDetails{
   final String rating;
 
   CompanyDetails(
-         this.companyIcon,
-         this.companyName,
-         this.description,
-         this.order,
-         this.rating);
+    this.companyIcon,
+    this.companyName,
+    this.description,
+    this.order,
+    this.rating
+  );
 }
 
 class CompanyDetailsModelProvider with ChangeNotifier {
@@ -23,13 +24,13 @@ class CompanyDetailsModelProvider with ChangeNotifier {
   final List<CompanyDetails> _companyList = [];
 
   void createList(CompanyDetails lineitems){
-    final newtask = CompanyDetails(
-      lineitems.companyIcon,
-      lineitems.companyName,
-      lineitems.description,
-      lineitems.order,
-      lineitems.rating,);
-    _companyList.add(newtask);
+    // final newtask = CompanyDetails(
+    //   lineitems.companyIcon,
+    //   lineitems.companyName,
+    //   lineitems.description,
+    //   lineitems.order,
+    //   lineitems.rating,);
+    // _companyList.add(newtask);
     notifyListeners();
   }
 

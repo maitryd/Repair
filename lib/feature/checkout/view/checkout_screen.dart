@@ -35,7 +35,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   @override
   Widget build(BuildContext context) {
 
-    print("page_state: ${widget.pageState}");
+   print("page_state: ${widget.pageState}");
 
     return WillPopScope(
       onWillPop: ()  => _exitApp(),
@@ -287,7 +287,32 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                                   String userId = Get.find<UserController>().userInfoModel.id!;
                                                   if(Get.find<CheckOutController>().selectedPaymentMethod == PaymentMethodName.COS){
                                                     String paymentMethod = "cash_after_service";
-
+                                                    showDialog(
+                                                        context: Get.context!,
+                                                        builder: (context){
+                                                          return AlertDialog(
+                                                            shape: RoundedRectangleBorder(
+                                                                borderRadius: BorderRadius.all(Radius.circular(10.0))
+                                                            ),
+                                                            content: Expanded(
+                                                              child: Column(
+                                                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                                children: [
+                                                                  Image.asset(Images.bell, height: 50, width: 50, color: Theme.of(context).primaryColor,),
+                                                                  SizedBox(height: 10.0),
+                                                                  Text("order placed successfully")
+                                                                ],
+                                                              ),
+                                                            ),
+                                                            actions:
+                                                            [
+                                                              ElevatedButton(onPressed: () {}, child: Text("Cancel")),
+                                                              ElevatedButton(onPressed: () {}, child: Text("Go")),
+                                                            ],
+                                                            actionsAlignment: MainAxisAlignment.spaceEvenly,
+                                                          );
+                                                        });
                                                     Get.find<ServiceBookingController>().placeBookingRequest(
                                                       paymentMethod: paymentMethod,
                                                       userID: userId,
